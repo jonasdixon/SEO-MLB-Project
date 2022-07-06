@@ -25,14 +25,17 @@ def ids_to_stats(ids):
       player_stats_list.append(stats)
     except:
       pass
-    print(pd.DataFrame(player_stats_list))
+  
+  return pd.DataFrame(player_stats_list)
 
 def main():
   player_name = input('Enter an MLB player (Lastname): ')
   valid_name = validate_name(player_name)
   ids = get_player_ids(valid_name)
-  ids_to_stats(ids)
-  # print(statsapi.league_leaders('homeRuns', season=2019, playerPool = 'rookies', limit = 5))
+  
+  hitting_stats = ids_to_stats(ids)
+  grouped_hitting_stats = hitting_stats.groupby('player').sum()
+  print(grouped_hitting_stats.sort_values('homeRuns', ascending = 'False')) 
 
 if __name__ == "__main__":
   main()
