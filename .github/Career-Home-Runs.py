@@ -9,6 +9,7 @@ def validate_name(player):
   return player
 
 def get_player_ids(player):
+  # Gets the IDs of all the players with the entered last name in the API
   players = statsapi.lookup_player(player)
   player_ids = []
   for id_ in players:
@@ -16,6 +17,7 @@ def get_player_ids(player):
   return player_ids
 
 def ids_to_stats(ids):
+  # Uses player IDs to retreive player stats and put them into a dataframe
   player_stats_list = []
 
   for player_id in ids:
@@ -28,8 +30,8 @@ def ids_to_stats(ids):
   
   return pd.DataFrame(player_stats_list)
 
-def main():
-  player_name = input('Enter an active MLB player (Lastname): ')
+def run_program(player_name):
+  # Driver for the program. Reruns program if player name is not active / does not exist
   valid_name = validate_name(player_name)
   ids = get_player_ids(valid_name)
   
@@ -38,7 +40,12 @@ def main():
     grouped_hitting_stats = hitting_stats.groupby('player').sum()
     print(grouped_hitting_stats.sort_values('homeRuns', ascending = False)['homeRuns'])
   except (KeyError):
-    print("There are no active MLB players with that last name. Re-run program to try again.")
-    
+    player_name = input("There are no active MLB players with that last name. Please enter a new player: ")
+    run_program(player_name)
+
+def main():
+  player_name = input('Enter an active MLB player (Lastname): ')
+  run_program(player_name)
+  
 if __name__ == "__main__":
   main()
