@@ -34,8 +34,11 @@ def main():
   ids = get_player_ids(valid_name)
   
   hitting_stats = ids_to_stats(ids)
-  grouped_hitting_stats = hitting_stats.groupby('player').sum()
-  print(grouped_hitting_stats.sort_values('homeRuns', ascending = False)['homeRuns']) 
-
+  try:
+    grouped_hitting_stats = hitting_stats.groupby('player').sum()
+    print(grouped_hitting_stats.sort_values('homeRuns', ascending = False)['homeRuns'])
+  except (KeyError):
+    print("There are no active MLB players with that last name. Re-run program to try again.")
+    
 if __name__ == "__main__":
   main()
