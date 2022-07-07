@@ -20,7 +20,7 @@ def ids_to_stats(ids):
 
   for player_id in ids:
     try:
-      stats = statsapi.player_stat_data(player_id, group = 'homeRuns', type = 'career')['stats'][0]['stats']
+      stats = statsapi.player_stat_data(player_id, group = 'hitting', type = 'career')['stats'][0]['stats']
       stats.update({'player' : statsapi.lookup_player(player_id)[0]['fullName']})
       player_stats_list.append(stats)
     except:
@@ -29,13 +29,13 @@ def ids_to_stats(ids):
   return pd.DataFrame(player_stats_list)
 
 def main():
-  player_name = input('Enter an MLB player (Lastname): ')
+  player_name = input('Enter an active MLB player (Lastname): ')
   valid_name = validate_name(player_name)
   ids = get_player_ids(valid_name)
   
   hitting_stats = ids_to_stats(ids)
   grouped_hitting_stats = hitting_stats.groupby('player').sum()
-  print(grouped_hitting_stats.sort_values('homeRuns', ascending = 'False')) 
+  print(grouped_hitting_stats.sort_values('homeRuns', ascending = False)['homeRuns']) 
 
 if __name__ == "__main__":
   main()
