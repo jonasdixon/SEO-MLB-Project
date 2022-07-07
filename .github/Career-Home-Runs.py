@@ -5,7 +5,7 @@ import pandas as pd
 def validate_name(player):
   # Validates player from user to look up in the API
   while player.isdigit() or player == "":
-    player = input("Please enter player name in following format: Lastname")
+    player = input("Please enter player name in following format -> Lastname: ")
   return player
 
 def get_player_ids(player):
