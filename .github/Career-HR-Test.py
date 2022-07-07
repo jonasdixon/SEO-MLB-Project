@@ -17,12 +17,6 @@ class TestFileName(unittest.TestCase):
                           Noe Ramirez         0
                           Yohan Ramirez       0
                           Name: homeRuns, dtype: int64')
-    
-    def test_inactive_players(self):
-        self.assertEqual()
-
-    def test_matching_last_name(self):
-        self.assertEqual(, 0)
 
 if __name__ == '__main__':
     unittest.main()
